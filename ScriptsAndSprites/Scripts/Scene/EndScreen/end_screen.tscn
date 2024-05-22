@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcvhoimtkwby8"]
+
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Scene/EndScreen/end_screen.gd" id="1_8l1c8"]
+[ext_resource type="FontFile" uid="uid://bu1of2kv5b13u" path="res://ScriptsAndSprites/Fonts/3270-Medium-500.ttf" id="1_lw5oj"]
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8l1c8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 150.0
+color = Color(0, 0, 0, 1)
+
+[node name="mes1" type="Label" parent="."]
+layout_mode = 0
+offset_right = 129.0
+offset_bottom = 17.0
+theme_override_fonts/font = ExtResource("1_lw5oj")
+text = "Connection lost"
+
+[node name="mes2" type="Label" parent="."]
+layout_mode = 0
+offset_top = 17.0
+offset_right = 112.0
+offset_bottom = 34.0
+theme_override_fonts/font = ExtResource("1_lw5oj")
+text = "Score"
+
+[node name="mes3" type="Label" parent="."]
+layout_mode = 0
+offset_top = 35.0
+offset_right = 181.0
+offset_bottom = 52.0
+theme_override_fonts/font = ExtResource("1_lw5oj")
+text = "Rebooting terminal..."
+
+[node name="mes4" type="Label" parent="."]
+layout_mode = 0
+offset_top = 52.0
+offset_right = 26.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("1_lw5oj")
+text = "..3"
+
+[node name="mes5" type="Label" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 52.0
+offset_right = 52.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("1_lw5oj")
+text = "..2"
+
+[node name="mes6" type="Label" parent="."]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 52.0
+offset_right = 78.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("1_lw5oj")
+text = "..1"
+
+[node name="nextMesTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="nextMesTimer" to="." method="_on_next_mes_timer_timeout"]

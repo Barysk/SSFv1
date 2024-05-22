@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://dcloi23bu7tjq"]
+
+[ext_resource type="PackedScene" uid="uid://u7jirtqndkst" path="res://ScriptsAndSprites/Scripts/Player/Starship/player_star_ship.tscn" id="1_e6r8s"]
+[ext_resource type="PackedScene" uid="uid://cu2xt64ud3i66" path="res://ScriptsAndSprites/Scripts/Scene/Space/space_parallax_background.tscn" id="1_r34v6"]
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Scene/Space/space.gd" id="1_to5bf"]
+[ext_resource type="AudioStream" uid="uid://dwicq318bqkbk" path="res://ScriptsAndSprites/Sounds/PlayerExplosion.wav" id="4_gex28"]
+[ext_resource type="AudioStream" uid="uid://bpwxwetc2jvcu" path="res://ScriptsAndSprites/Sounds/EnemyExplosion.wav" id="5_mn803"]
+
+[sub_resource type="Curve2D" id="Curve2D_6kric"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -63.9998, -64.0002, 0, 0, 0, 0, 264.461, -65.3957, 0, 0, 0, 0, 264.46, 214.685, 0, 0, 0, 0, -72, 216, 0, 0, 0, 0, -63.9998, -56.0002)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_qxbc7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 24, 8, 0, 0, 0, 0, 176, 8, 0, 0, 0, 0, 176, 144, 0, 0, 0, 0, 24, 144, 0, 0, 0, 0, 24, 8)
+}
+point_count = 5
+
+[node name="Space" type="Node2D"]
+script = ExtResource("1_to5bf")
+
+[node name="SpaceParallaxBackground" parent="." instance=ExtResource("1_r34v6")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(100, 75)
+rotation = -1.5708
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+
+[node name="Path2D" type="Path2D" parent="Camera2D"]
+position = Vector2(75.0004, -99.9997)
+rotation = 1.5708
+curve = SubResource("Curve2D_6kric")
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="Camera2D/Path2D"]
+position = Vector2(-63.9998, -64.0002)
+rotation = -0.00424858
+
+[node name="Path2D2" type="Path2D" parent="Camera2D"]
+position = Vector2(75.0004, -99.9997)
+rotation = 1.5708
+curve = SubResource("Curve2D_qxbc7")
+
+[node name="SaveDataPointPath" type="PathFollow2D" parent="Camera2D/Path2D2"]
+position = Vector2(24, 8)
+
+[node name="PlayerStarShip" parent="." instance=ExtResource("1_e6r8s")]
+position = Vector2(100, 75)
+rotation = -1.5708
+motion_mode = 0
+acceleration = 1000
+
+[node name="RemoteTransform2D2" type="RemoteTransform2D" parent="PlayerStarShip"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="AfterLifeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="PlayerDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gex28")
+pitch_scale = 0.7
+
+[node name="EnemyDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_mn803")
+pitch_scale = 1.5
+
+[connection signal="no_enemies_left" from="." to="." method="_on_no_enemies_left"]
+[connection signal="player_destroyed_enemy_ship" from="PlayerStarShip" to="." method="_on_player_star_ship_player_destroyed_enemy_ship"]
+[connection signal="player_star_ship_destroyed" from="PlayerStarShip" to="." method="_on_player_star_ship_player_star_ship_destroyed"]
+[connection signal="player_star_ship_destroyed" from="PlayerStarShip" to="PlayerStarShip" method="_on_player_star_ship_destroyed"]
+[connection signal="timeout" from="AfterLifeTimer" to="." method="_on_after_life_timer_timeout"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]

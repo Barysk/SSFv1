@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcloi23bu7tjq"]
+
+[ext_resource type="PackedScene" uid="uid://u7jirtqndkst" path="res://ScriptsAndSprites/Scripts/Player/Starship/player_star_ship.tscn" id="1_e6r8s"]
+[ext_resource type="PackedScene" uid="uid://bs3xf3c4ma3tf" path="res://ScriptsAndSprites/Scripts/Enemy/Starship/enemy_star_ship.tscn" id="2_j8m3f"]
+
+[node name="Space" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(100, 75)
+rotation = -1.5708
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+
+[node name="PlayerStarShip" parent="." instance=ExtResource("1_e6r8s")]
+position = Vector2(100, 75)
+rotation = -1.5708
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PlayerStarShip"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="EnemyStarShip" parent="." instance=ExtResource("2_j8m3f")]
+position = Vector2(100, 100)
+rotation = -1.5708

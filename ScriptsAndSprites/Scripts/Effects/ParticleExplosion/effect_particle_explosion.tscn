@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm41mdje67w5j"]
+
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Effects/ParticleExplosion/effect_particle_explosion.gd" id="1_r51ja"]
+
+[sub_resource type="Curve" id="Curve_uhe78"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="EffectParticleExplosion" type="Node2D"]
+script = ExtResource("1_r51ja")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 64
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_uhe78")
+
+[connection signal="finished" from="CPUParticles2D" to="." method="_on_cpu_particles_2d_finished"]

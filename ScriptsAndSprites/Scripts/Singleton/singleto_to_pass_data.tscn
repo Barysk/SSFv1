@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmvlufs1m1m2y"]
+
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Singleton/singleto_to_pass_data.gd" id="1_sjtga"]
+[ext_resource type="AudioStream" uid="uid://nejop1a4hdem" path="res://ScriptsAndSprites/Sounds/Saved.wav" id="2_yyfeq"]
+
+[node name="SingletoToPassData" type="Node2D"]
+script = ExtResource("1_sjtga")
+
+[node name="DataSaved" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_yyfeq")
+pitch_scale = 0.9

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://7brorbnuie6u"]
+
+[ext_resource type="PackedScene" uid="uid://y1370i0wepkv" path="res://ScriptsAndSprites/Scripts/Overlap/hitbox.tscn" id="1_ngc4a"]
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Enemy/Starship/enemy_star_ship_projectile.gd" id="1_t1rs4"]
+[ext_resource type="Texture2D" uid="uid://g7aobm5k68q4" path="res://ScriptsAndSprites/Sprites/Enemy/Starship/enemy_projektile_sprite-sheet.png" id="2_l6c78"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0rgtf"]
+radius = 1.0
+
+[node name="EnemyStarShipProjectile" type="Node2D"]
+script = ExtResource("1_t1rs4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(9, 0)
+rotation = 1.5708
+texture = ExtResource("2_l6c78")
+
+[node name="Hitbox" parent="." instance=ExtResource("1_ngc4a")]
+position = Vector2(12, 0)
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_0rgtf")
+
+[node name="ProjectileLiveTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+
+[editable path="Hitbox"]

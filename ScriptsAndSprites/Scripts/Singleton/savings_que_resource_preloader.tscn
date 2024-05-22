@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b868umm2qvool"]
+
+[sub_resource type="GDScript" id="GDScript_1p2v7"]
+script/source = "extends ResourcePreloader
+
+var PLAYER_ID: String = \"\"
+var PLAYER_SCORE: int = 0
+"
+
+[node name="SavingsQueResourcePreloader" type="ResourcePreloader"]
+script = SubResource("GDScript_1p2v7")

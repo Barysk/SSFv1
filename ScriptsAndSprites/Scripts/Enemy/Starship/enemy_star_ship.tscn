@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://bs3xf3c4ma3tf"]
+
+[ext_resource type="PackedScene" uid="uid://dq0l7mg6qdm5h" path="res://ScriptsAndSprites/Scripts/BaseClass/entity_star_ship.tscn" id="1_yuj1w"]
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Enemy/Starship/enemy_star_ship.gd" id="2_j65qc"]
+[ext_resource type="Texture2D" uid="uid://6mtl31rjcshe" path="res://ScriptsAndSprites/Sprites/Enemy/Starship/enemy_sprite.png" id="3_kpdry"]
+[ext_resource type="AudioStream" uid="uid://cukfvhtbh15hs" path="res://ScriptsAndSprites/Sounds/HitEnemy.wav" id="4_8ea0g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8547e"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_faaoj"]
+radius = 4.0
+
+[node name="EnemyStarShip" instance=ExtResource("1_yuj1w")]
+collision_layer = 32
+collision_mask = 48
+script = ExtResource("2_j65qc")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_kpdry")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_8547e")
+
+[node name="Hurtbox" parent="." index="2"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_faaoj")
+
+[node name="Timer" parent="." index="3"]
+wait_time = 0.22
+
+[node name="InvincibilityTimer" type="Timer" parent="." index="4"]
+wait_time = 0.3
+
+[node name="Hit" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource("4_8ea0g")
+pitch_scale = 0.9
+
+[connection signal="condition_deteriorated" from="." to="." method="_on_condition_deteriorated"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
+
+[editable path="Hurtbox"]

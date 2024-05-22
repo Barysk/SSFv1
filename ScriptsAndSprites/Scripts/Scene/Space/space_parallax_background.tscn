@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://cu2xt64ud3i66"]
+
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Scene/Space/space_parallax_background.gd" id="1_epf17"]
+[ext_resource type="Texture2D" uid="uid://p4artyxqixmt" path="res://ScriptsAndSprites/Sprites/Scene/SpaceUpdated/background.png" id="2_htt6g"]
+[ext_resource type="Texture2D" uid="uid://bdxdt7q0trh6t" path="res://ScriptsAndSprites/Sprites/Scene/SpaceUpdated/distant_stars.png" id="3_2xjpw"]
+[ext_resource type="Texture2D" uid="uid://dt1tvoou8nasi" path="res://ScriptsAndSprites/Sprites/Scene/SpaceUpdated/nearest_stars.png" id="4_jb1cv"]
+
+[node name="SpaceParallaxBackground" type="ParallaxBackground"]
+script = ExtResource("1_epf17")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="StarsDistant" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(200, 150)
+
+[node name="Sprite2D" type="Sprite2D" parent="StarsDistant"]
+texture_repeat = 2
+position = Vector2(100, 75)
+scale = Vector2(1.66667, 1.66667)
+texture = ExtResource("3_2xjpw")
+region_rect = Rect2(0, 0, 200, 150)
+
+[node name="Space" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(200, 150)
+
+[node name="Sprite2D" type="Sprite2D" parent="Space"]
+position = Vector2(100, 75)
+scale = Vector2(5, 5)
+texture = ExtResource("2_htt6g")
+region_rect = Rect2(0, 0, 40, 30)
+
+[node name="StarsNeares" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.9, 0.9)
+motion_mirroring = Vector2(200, 150)
+
+[node name="Sprite2D" type="Sprite2D" parent="StarsNeares"]
+texture_repeat = 2
+position = Vector2(100, 75)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("4_jb1cv")
+region_rect = Rect2(0, 0, 200, 150)

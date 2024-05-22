@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://u7jirtqndkst"]
+
+[ext_resource type="Script" path="res://ScriptsAndSprites/Scripts/Player/Starship/player_star_ship.gd" id="1_wfrqx"]
+[ext_resource type="PackedScene" uid="uid://dq0l7mg6qdm5h" path="res://ScriptsAndSprites/Scripts/BaseClass/entity_star_ship.tscn" id="1_wslx1"]
+[ext_resource type="Texture2D" uid="uid://cexrnyfovw32" path="res://ScriptsAndSprites/Sprites/Player/Starship/player_sprite_test.png" id="2_cdjbo"]
+[ext_resource type="FontFile" uid="uid://bu1of2kv5b13u" path="res://ScriptsAndSprites/Fonts/3270-Medium-500.ttf" id="4_vl5cd"]
+[ext_resource type="AudioStream" uid="uid://ch5sj33llvfq8" path="res://ScriptsAndSprites/Sounds/HitPlayer.wav" id="5_0fyvu"]
+[ext_resource type="AudioStream" uid="uid://dsf2tocqx7gqr" path="res://ScriptsAndSprites/Sounds/PlayerShoot.wav" id="5_i6kby"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qswx8"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ug3ip"]
+radius = 3.0
+
+[node name="PlayerStarShip" instance=ExtResource("1_wslx1")]
+collision_layer = 16
+collision_mask = 32
+script = ExtResource("1_wfrqx")
+player_score = 0
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(1, 0)
+texture = ExtResource("2_cdjbo")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_qswx8")
+
+[node name="Hurtbox" parent="." index="2"]
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_ug3ip")
+
+[node name="InitialTimer" type="Timer" parent="." index="3"]
+wait_time = 4.0
+one_shot = true
+
+[node name="Timer" parent="." index="4"]
+wait_time = 0.11
+
+[node name="InvincibilityTimer" type="Timer" parent="." index="5"]
+wait_time = 0.7
+one_shot = true
+
+[node name="ScoreDebug" type="Label" parent="." index="6"]
+visible = false
+offset_left = -20.0
+offset_top = 5.0
+offset_right = 20.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("4_vl5cd")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IDDebug" type="Label" parent="." index="7"]
+visible = false
+offset_left = -20.0
+offset_top = 19.0
+offset_right = 20.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("4_vl5cd")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HitSound" type="AudioStreamPlayer" parent="." index="8"]
+stream = ExtResource("5_0fyvu")
+pitch_scale = 0.6
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="." index="9"]
+stream = ExtResource("5_i6kby")
+pitch_scale = 1.5
+
+[connection signal="condition_deteriorated" from="." to="." method="_on_condition_deteriorated"]
+[connection signal="timeout" from="InitialTimer" to="." method="_on_initial_timer_timeout"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
+
+[editable path="Hurtbox"]
